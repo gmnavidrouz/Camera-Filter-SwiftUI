@@ -25,7 +25,6 @@ struct ContentView: View {
                     Image(uiImage: selectedImage)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .clipShape(Circle())
                         .frame(width: 300, height: 300)
                     
                 } else{
@@ -67,6 +66,77 @@ struct ContentView: View {
                             }
                         }
                     }
+                    
+                    Button("Disc Blur"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.discBlur()
+                            currentFilter.inputImage = beginImage
+                            
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    
+                    Button("Invert Colors"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.colorInvert()
+                            currentFilter.inputImage = beginImage
+                            
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    
+                    Button("Noir"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.photoEffectNoir()
+                            currentFilter.inputImage = beginImage
+                            
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    
+                    Button("Chrome"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.photoEffectChrome()
+                            currentFilter.inputImage = beginImage
+                            
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    
+                    Button("XRAY"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.xRay()
+                            currentFilter.inputImage = beginImage
+                            
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    
                 }.sheet(isPresented: self.$displayPickerView) {
                     ImagePickerView(selectedImage: self.$selectedImage, sourceType: self.sourceType)
                 }
